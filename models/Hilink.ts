@@ -63,7 +63,6 @@ const HilinkSchema = new Schema<IHilink>(
   { timestamps: true }
 );
 
-HilinkSchema.index({ slug: 1 }, { unique: true });
 HilinkSchema.index({ owner: 1, createdAt: -1 });
 
 const Hilink: Model<IHilink> = (models.Hilink as Model<IHilink>) || mongoose.model<IHilink>('Hilink', HilinkSchema);

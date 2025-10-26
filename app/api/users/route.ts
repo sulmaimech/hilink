@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { connectDB } from '@/lib/mongodb';
+import { User } from '@/models';
 
 export async function GET() {
-  return NextResponse.json({ users: [] });
+  await connectDB();
+  const users = await User.find();
+  return NextResponse.json({ users });
 }
 
 export async function POST(request: NextRequest) {
+  await connectDB();
   const body = await request.json();
-  return NextResponse.json({ id: Date.now(), ...body }, { status: 201 });
+  const user = await User.create(body);
+  return NextResponse.json(user, { status: 201 });
 }
